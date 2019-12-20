@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, StyleSheet, Image, AsyncStorage } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Image, AsyncStorage } from "react-native";
 
 import Spotlist from '../components/SpotList'
 
@@ -10,19 +10,20 @@ export default function List() {
 
     useEffect(() => {
         AsyncStorage.getItem('techs').then(storagedTechs => {
-            const techsArray = storagedTechs.split(' ').map(tech => tech.trim())
+            const techsArray = storagedTechs.split(',').map(tech => tech.trim())
 
             setTechs(techsArray)
         })
     }, [])
 
-    // console.log(techs)
 
     return (
         <SafeAreaView style={styles.container}>
             <Image style={styles.logo} source={logo} />
 
-            {techs.map(tech => <Spotlist key={tech} tech={tech} />)}
+            <ScrollView>
+                {techs.map(tech => <Spotlist key={tech} tech={tech} />)}
+            </ScrollView>
         </SafeAreaView>
     )
 
